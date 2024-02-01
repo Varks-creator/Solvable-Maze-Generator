@@ -58,6 +58,34 @@ def create_entrance_exit(width, height):
             break
 
 
+def delete_wall(rand_wall):
+    for wall in walls:
+        if (wall[0] == rand_wall[0] and wall[1] == rand_wall[1]):
+            walls.remove(wall)  
+
+
+
+def create_maze(): 
+    while walls:
+        rand_wall = walls[int(random.random()*len(walls))-1]
+        if rand_wall[1] != 0:
+            if maze[rand_wall[0]][rand_wall[1]-1] == 'u' and                                 maze[rand_wall[0]][rand_wall[1]+1] == 'c':
+                s_cells = surroundingCells(rand_wall)
+                if s_cells < 2:
+                    maze[rand_wall[0]][rand_wall[1]] = 'c'
+                    
+                    if (rand_wall[0] != 0):
+                        if (maze[rand_wall[0]-1][rand_wall[1]] != 'c'):
+                            maze[rand_wall[0]-1][rand_wall[1]] = 'w'
+                        if ([rand_wall[0]-1, rand_wall[1]] not in walls):
+                            walls.append([rand_wall[0]-1, rand_wall[1]])
+                delete_wall(rand_wall)
+                continue
+            continue
+
+
+
+
 cell = 'c'
 wall = 'w'
 unvisited = 'u'
